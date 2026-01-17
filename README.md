@@ -18,37 +18,55 @@ A modern web platform that provides one-on-one online coaching for students prep
 
 Live functionality showcase of the platform:
 
-````carousel
-![Homepage Hero Section: Modern and attractive design welcoming students. "Let's Reach Success Together" message with stats showing 150+ expert coaches, 500+ students, and 95% success rate.](images/02-hero-section.png)
+<div align="center">
 
-<!-- slide -->
+### Homepage Hero Section
+![Homepage Hero Section](images/02-hero.png)
+*Modern and attractive design welcoming students with "Let's Reach Success Together" message*
 
-![Platform Features: Modern cards presenting core features like expert coaches, personal planning, and progress tracking.](images/03-features.png)
+---
 
-<!-- slide -->
+### Platform Features
+![Platform Features](images/03-features.png)
+*Modern cards presenting core features like expert coaches, personal planning, and progress tracking*
 
-![Pricing & Popular Coaches: Starter (1,500₺), Pro (2,500₺), and Elite (4.000₺) packages with popular coach profile cards.](images/04-pricing.png)
+---
 
-<!-- slide -->
+### Pricing & Popular Coaches
+![Pricing & Popular Coaches](images/04-pricing.png)
+*Starter (1,500₺), Pro (2,500₺), and Elite (4,000₺) packages with popular coach profile cards*
 
-![Coaches Listing: Advanced filtering system (expertise area, hourly rate, minimum rating) on coach search page. Detailed information cards for each coach.](images/05-coaches-listing.png)
+---
 
-<!-- slide -->
+### Coaches Listing
+![Coaches Listing](images/05-coaches-listing.png)
+*Advanced filtering system with expertise area, hourly rate, and minimum rating options*
 
-![Coach Profile Detail: Ayşe Arslan's profile - 8 years experience, 4.9 rating, 203 reviews. Appointment booking system and availability calendar displayed.](images/06-coach-profile.png)
+---
 
-<!-- slide -->
+### Coach Profile Detail
+![Coach Profile Detail](images/06-coach-profile.png)
+*Detailed coach profile showing experience, ratings, and appointment booking system*
 
-![Login Page: Email/password login and Google sign-in options. Features "Remember Me" and "Forgot Password" functionality.](images/07-login.png)
+---
 
-<!-- slide -->
+### Login Page
+![Login Page](images/07-login.png)
+*Email/password login and Google sign-in options with "Remember Me" functionality*
 
-![Registration Page: Sign up form for Student or Coach roles. Includes full name, email, phone, password fields and terms acceptance.](images/08-register.png)
+---
 
-<!-- slide -->
+### Registration Page
+![Registration Page](images/08-register.png)
+*Sign up form for Student or Coach roles with comprehensive fields*
 
-![Homepage - Full View: Comprehensive homepage view showcasing all platform sections.](images/01-homepage.png)
-````
+---
+
+### Full Homepage View
+![Homepage - Full View](images/01-homepage.png)
+*Comprehensive homepage view showcasing all platform sections*
+
+</div>
 
 > [!NOTE]
 > These screenshots were taken from the **live, fully functional** platform. All features are active and operational.
@@ -75,8 +93,8 @@ Live functionality showcase of the platform:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/MUTLU234/koachy-web.git
-   cd koachy-web
+   git clone https://github.com/MUTLU234/Koachy_Online_Web_Site.git
+   cd Koachy_Online_Web_Site
    ```
 
 2. **Install dependencies**
@@ -104,7 +122,7 @@ Live functionality showcase of the platform:
 ## 📁 Project Structure
 
 ```
-koachy-web/
+Koachy_Online_Web_Site/
 ├── src/
 │   ├── app/                    # Next.js App Router
 │   │   ├── (auth)/            # Auth pages
@@ -127,6 +145,7 @@ koachy-web/
 │   ├── hooks/                 # Custom hooks
 │   └── types/                 # TypeScript types
 ├── firebase/                  # Firebase config
+├── images/                    # Project screenshots
 ├── tests/                     # Test files
 └── docs/                      # Documentation
 ```
