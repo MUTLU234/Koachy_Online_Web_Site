@@ -18,37 +18,55 @@
 
 Platformun canlı çalışan özelliklerinden ekran görüntüleri:
 
-````carousel
-![Ana Sayfa - Hero Bölümü: Modern ve çekici tasarım ile öğrencileri karşılayan ana banner. "Başarıya Birlikte Ulaşalım" mesajı ve 150+ uzman koç, 500+ öğrenci, %95 başarı oranı istatistikleri görüntüleniyor.](images/02-hero-section.png)
+<div align="center">
 
-<!-- slide -->
+### Ana Sayfa - Hero Bölümü
+![Ana Sayfa - Hero Bölümü](images/02-hero.png)
+*Modern ve çekici tasarım ile öğrencileri karşılayan ana banner*
 
-![Platform Özellikleri: Uzman koçlar, kişisel planlama ve gelişim takibi gibi temel özelliklerin modern kartlarla sunumu.](images/03-features.png)
+---
 
-<!-- slide -->
+### Platform Özellikleri
+![Platform Özellikleri](images/03-features.png)
+*Uzman koçlar, kişisel planlama ve gelişim takibi gibi temel özelliklerin sunumu*
 
-![Fiyatlandırma ve Popüler Koçlar: Başlangıç (1.500₺), Pro (2.500₺) ve Elite (4.000₺) paketleri ile popüler koçların profil kartları.](images/04-pricing.png)
+---
 
-<!-- slide -->
+### Fiyatlandırma ve Popüler Koçlar
+![Fiyatlandırma ve Popüler Koçlar](images/04-pricing.png)
+*Başlangıç, Pro ve Elite paketleri ile popüler koçların profil kartları*
 
-![Koçlar Listesi: Gelişmiş filtreleme sistemi (uzmanlık alanı, saatlik ücret, minimum puan) ile koç arama sayfası. Her koç için detaylı bilgi kartları.](images/05-coaches-listing.png)
+---
 
-<!-- slide -->
+### Koçlar Listesi
+![Koçlar Listesi](images/05-coaches-listing.png)
+*Gelişmiş filtreleme sistemi ile koç arama sayfası*
 
-![Koç Profil Detayı: Ayşe Arslan'ın profili - 8 yıl deneyim, 4.9 puan, 203 değerlendirme. Randevu alma sistemi ve müsaitlik takvimi görüntüleniyor.](images/06-coach-profile.png)
+---
 
-<!-- slide -->
+### Koç Profil Detayı
+![Koç Profil Detayı](images/06-coach-profile.png)
+*Detaylı koç profili, deneyim, puanlar ve randevu alma sistemi*
 
-![Giriş Sayfası: Email/şifre girişi ve Google ile oturum açma seçenekleri. "Beni Hatırla" ve "Şifremi Unuttum" özellikleri mevcut.](images/07-login.png)
+---
 
-<!-- slide -->
+### Giriş Sayfası
+![Giriş Sayfası](images/07-login.png)
+*Email/şifre girişi ve Google ile oturum açma seçenekleri*
 
-![Kayıt Sayfası: Öğrenci veya Koç olarak kayıt formu. Ad soyad, email, telefon, şifre alanları ve kullanım koşulları onayı.](images/08-register.png)
+---
 
-<!-- slide -->
+### Kayıt Sayfası
+![Kayıt Sayfası](images/08-register.png)
+*Öğrenci veya Koç olarak kayıt formu*
 
-![Ana Sayfa - Tam Görünüm: Platformun tüm bölümlerini içeren kapsamlı ana sayfa görünümü.](images/01-homepage.png)
-````
+---
+
+### Ana Sayfa - Tam Görünüm
+![Ana Sayfa - Tam Görünüm](images/01-homepage.png)
+*Platformun tüm bölümlerini içeren kapsamlı ana sayfa görünümü*
+
+</div>
 
 > [!NOTE]
 > Yukarıdaki ekran görüntüleri **canlı çalışan** platformdan alınmıştır. Tüm özellikler aktif ve fonksiyoneldir.
@@ -75,8 +93,8 @@ Platformun canlı çalışan özelliklerinden ekran görüntüleri:
 
 1. **Repository'yi klonlayın**
    ```bash
-   git clone https://github.com/your-username/koachy-web.git
-   cd koachy-web
+   git clone https://github.com/MUTLU234/Koachy_Online_Web_Site.git
+   cd Koachy_Online_Web_Site
    ```
 
 2. **Bağımlılıkları yükleyin**
@@ -104,7 +122,7 @@ Platformun canlı çalışan özelliklerinden ekran görüntüleri:
 ## 📁 Proje Yapısı
 
 ```
-koachy-web/
+Koachy_Online_Web_Site/
 ├── src/
 │   ├── app/                    # Next.js App Router
 │   │   ├── (auth)/            # Auth sayfaları
@@ -127,6 +145,7 @@ koachy-web/
 │   ├── hooks/                 # Custom hooks
 │   └── types/                 # TypeScript types
 ├── firebase/                  # Firebase config
+├── images/                    # Proje ekran görüntüleri
 ├── tests/                     # Test files
 ├── test_kanitlari/           # Test evidence
 └── docs/                      # Documentation
@@ -204,7 +223,7 @@ npm run test:unit    # Unit tests
 
 Bu proje MIT lisansı altında lisanslanmıştır.
 
-## �‍💻 Yazar
+## 👨‍💻 Yazar
 
 **Nurettin Mutlu Tüver**
 
