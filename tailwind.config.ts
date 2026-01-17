@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,20 +11,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Müşteri renk paleti
-        primary: {
-          DEFAULT: "#4F46E5", // Ana renk (Mor/Indigo)
-          50: "#EEEFFE",
-          100: "#E0DFFE",
-          200: "#C7C3FC",
-          300: "#A5A0FA",
-          400: "#8B83F9",
-          500: "#4F46E5", // Ana renk
-          600: "#4338CA",
-          700: "#3730A3",
-          800: "#312E81",
-          900: "#1E1B4B",
-        },
+        // Müşteri renk paleti - v4'te @theme ile tanımlanıyor
         background: {
           DEFAULT: "#F9FAFB", // Arka plan rengi
           dark: "#111827",

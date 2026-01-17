@@ -1,0 +1,75 @@
+rules_version = '2';
+
+/**
+ * Firebase Storage Security Rules
+ * 
+ * Koachy / KoçumYanımda Platformu
+ * Dosya yükleme güvenlik kuralları
+ */
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    function isValidImageType() {
+      return request.resource.contentType.matches('image/.*');
+    }
+    
+    function isValidDocumentType() {
+      return request.resource.contentType.matches('application/pdf') ||
+             request.resource.contentType.matches('application/msword') ||
+             request.resource.contentType.matches('application/vnd.openxmlformats-officedocument.*');
+    }
+    
+    function isValidVideoType() {
+      return request.resource.contentType.matches('video/.*');
+    }
+    
+    function isUnder10MB() {
+      return request.resource.size < 10 * 1024 * 1024; // 10MB
+    }
+    
+    function isUnder50MB() {
+      return request.resource.size < 50 * 1024 * 1024; // 50MB
+    }
+    
+    // Profil fotoğrafları
+    match /profiles/{userId}/{fileName} {
+      allow read: if true; // Public read
+      allow write: if isAuthenticated() && 
+                     isOwner(userId) &&
+                     isValidImageType() &&
+                     isUnder10MB();
+    }
+    
+    // Ders notları (PDF/DOC)
+    match /notes/{userId}/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() &&
+                     isValidDocumentType() &&
+                     isUnder50MB();
+    }
+    
+    // Demo videolar (Koçlar için)
+    match /demos/{userId}/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() &&
+                     isOwner(userId) &&
+                     isValidVideoType() &&
+                     isUnder50MB();
+    }
+    
+    // Diğer tüm dosyalar için erişim reddedilir
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

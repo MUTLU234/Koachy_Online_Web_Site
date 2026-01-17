@@ -40,3 +40,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# firebase service account (GİZLİ - commit etmeyin!)
+firebase-service-account.json
+*firebase-adminsdk*.json
+*-firebase-adminsdk-*.json
+
+# additional security - private keys
+*.key
+*.p12
+*.pfx
+*private*.json

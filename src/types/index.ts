@@ -92,6 +92,7 @@ export interface Student {
     enrolledCoaches: string[];
     grade?: string;
     targetExam?: string;
+    subjects?: string[];
     notes: StudentNote[];
     progressReports: ProgressReport[];
     subscriptionStatus: SubscriptionStatus;
@@ -133,8 +134,10 @@ export interface Appointment {
     status: AppointmentStatus;
     meetingLink?: string;
     notes?: string;
-    cancelledBy?: string;
-    cancelReason?: string;
+    cancelledBy?: string;  // Kim iptal etti
+    cancelReason?: string;  // İptal nedeni
+    canceledAt?: Timestamp; // İptal tarihi
+    hiddenFrom?: string[];  // Hangi kullanıcılardan gizli (soft delete)
     createdAt: Timestamp;
     updatedAt: Timestamp;
 }

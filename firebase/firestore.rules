@@ -1,0 +1,258 @@
+rules_version = '2';
+
+/**
+ * Firestore Security Rules
+ * 
+ * Koachy / KoçumYanımda Platformu
+ * Güvenlik kuralları - Role Based Access Control (RBAC)
+ * 
+ * Roller:
+ * - student: Öğrenci
+ * - coach: Koç
+ * - admin: Yönetici
+ */
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ============================================================================
+    // HELPER FUNCTIONS (Yardımcı Fonksiyonlar)
+    // ============================================================================
+    
+    /**
+     * Kullanıcının kimliği doğrulanmış mı?
+     */
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    /**
+     * Kullanıcı belirtilen userId'ye sahip mi?
+     */
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    /**
+     * Kullanıcı admin mi?
+     */
+    function isAdmin() {
+      return isAuthenticated() && 
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    /**
+     * Kullanıcı koç mu?
+     */
+    function isCoach() {
+      return isAuthenticated() && 
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'coach';
+    }
+    
+    /**
+     * Kullanıcı öğrenci mi?
+     */
+    function isStudent() {
+      return isAuthenticated() && 
+  exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'student';
+    }
+    
+    /**
+     * Email doğrulanmış mı?
+     */
+    function isEmailVerified() {
+      return isAuthenticated() && request.auth.token.email_verified == true;
+    }
+    
+    /**
+     * Kullanıcı aktif mi?
+     */
+    function isActiveUser() {
+      return isAuthenticated() &&
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isActive == true;
+    }
+    
+    // ============================================================================
+    // USERS COLLECTION (Kullanıcılar)
+    // ============================================================================
+    
+    match /users/{userId} {
+      // Okuma: Kimliği doğrulanmış herkes okuyabilir
+      allow read: if isAuthenticated();
+      
+      // Oluşturma: Kendi kaydını oluşturabilir
+      allow create: if isAuthenticated() && 
+                      isOwner(userId) &&
+                      request.resource.data.role in ['student', 'coach'] &&
+                      request.resource.data.uid == request.auth.uid;
+      
+      // Güncelleme: Kendisi veya admin güncelleyebilir
+      allow update: if (isOwner(userId) || isAdmin()) &&
+                      // Role değiştirilemez (sadece admin değiştirebilir)
+                      (request.resource.data.role == resource.data.role || isAdmin());
+      
+      // Silme: Sadece admin silebilir
+      allow delete: if isAdmin();
+    }
+    
+    // ============================================================================
+    // COACHES COLLECTION (Koçlar)
+    // ============================================================================
+    
+    match /coaches/{coachId} {
+      // Okuma: Kimliği doğrulanmış herkes okuyabilir
+      allow read: if isAuthenticated();
+      
+      // Oluşturma: Koç kendisi oluşturabilir
+      allow create: if isAuthenticated() && 
+                      isCoach() &&
+                      request.resource.data.userId == request.auth.uid;
+      
+      // Güncelleme: Koçun kendisi veya admin güncelleyebilir
+      allow update: if (isOwner(resource.data.userId) || isAdmin()) &&
+                      // Verified durumunu sadece admin değiştirebilir
+                      (request.resource.data.verified == resource.data.verified || isAdmin());
+      
+      // Silme: Sadece admin silebilir
+      allow delete: if isAdmin();
+    }
+    
+    // ============================================================================
+    // STUDENTS COLLECTION (Öğrenciler)
+    // ============================================================================
+    
+    match /students/{studentId} {
+      // Okuma: Öğrencinin kendisi veya admin okuyabilir
+      allow read: if isOwner(resource.data.userId) || isAdmin();
+      
+      // Oluşturma: Öğrenci kendisi oluşturabilir
+      allow create: if isAuthenticated() && 
+                      isStudent() &&
+                      request.resource.data.userId == request.auth.uid;
+      
+      // Güncelleme: Öğrencinin kendisi veya admin güncelleyebilir
+      allow update: if isOwner(resource.data.userId) || isAdmin();
+      
+      // Silme: Sadece admin silebilir
+      allow delete: if isAdmin();
+    }
+    
+    // ============================================================================
+    // APPOINTMENTS COLLECTION (Randevular)
+    // ============================================================================
+    
+    match /appointments/{appointmentId} {
+      // Okuma: Randevuda yer alan öğrenci, koç veya admin okuyabilir
+      allow read: if isAuthenticated() && 
+                    (request.auth.uid == resource.data.studentId || 
+                     request.auth.uid == resource.data.coachId ||
+                     isAdmin());
+      
+      // Oluşturma: Öğrenci randevu oluşturabilir
+      allow create: if isAuthenticated() && 
+                      isStudent() &&
+                      request.resource.data.studentId == request.auth.uid &&
+                      isEmailVerified() &&
+                      isActiveUser();
+      
+      // Güncelleme: İlgili öğrenci, koç veya admin güncelleyebilir
+      allow update: if isAuthenticated() && 
+                      (request.auth.uid == resource.data.studentId || 
+                       request.auth.uid == resource.data.coachId ||
+                       isAdmin());
+      
+      // Silme: Sadece admin silebilir
+      allow delete: if isAdmin();
+    }
+    
+    // ============================================================================
+    // MESSAGES COLLECTION (Mesajlar)
+    // ============================================================================
+    
+    match /messages/{chatId} {
+      // Okuma: Chat'e dahil olan öğrenci veya koç okuyabilir
+      allow read: if isAuthenticated() && 
+                    (request.auth.uid == resource.data.participants.studentId || 
+                     request.auth.uid == resource.data.participants.coachId);
+      
+      // Oluşturma: İlgili öğrenci veya koç oluşturabilir
+      allow create: if isAuthenticated() &&
+                      (request.auth.uid == request.resource.data.participants.studentId || 
+                       request.auth.uid == request.resource.data.participants.coachId);
+      
+      // Güncelleme: Chat'e dahil olan öğrenci veya koç güncelleyebilir
+      allow update: if isAuthenticated() && 
+                      (request.auth.uid == resource.data.participants.studentId || 
+                       request.auth.uid == resource.data.participants.coachId);
+      
+      // Silme: Sadece admin silebilir
+      allow delete: if isAdmin();
+    }
+    
+    // ============================================================================
+    // PAYMENTS COLLECTION (Ödemeler)
+    // ============================================================================
+    
+    match /payments/{paymentId} {
+      // Okuma: Ödemeyi yapan kullanıcı veya admin okuyabilir
+      allow read: if isOwner(resource.data.userId) || isAdmin();
+      
+      // Oluşturma: Kimliği doğrulanmış kullanıcı oluşturabilir
+      allow create: if isAuthenticated() && 
+                      isEmailVerified() &&
+                      request.resource.data.userId == request.auth.uid;
+      
+      // Güncelleme: Sadece admin güncelleyebilir (ödeme durumu vs.)
+      allow update: if isAdmin();
+      
+      // Silme: Ödemeler asla silinmemeli
+      allow delete: if false;
+    }
+    
+    // ============================================================================
+    // SITE CONTENT COLLECTION (CMS İçerikleri)
+    // ============================================================================
+    
+    match /siteContent/{section} {
+      // Okuma: Herkes okuyabilir (public)
+      allow read: if true;
+      
+      // Yazma: Sadece admin yazabilir
+      allow write: if isAdmin();
+    }
+    
+    // ============================================================================
+    // REVIEWS COLLECTION (Yorumlar)
+    // ============================================================================
+    
+    match /reviews/{reviewId} {
+      // Okuma: Kimliği doğrulanmış herkes okuyabilir
+      allow read: if isAuthenticated();
+      
+      // Oluşturma: Öğrenci yorum yapabilir
+      allow create: if isAuthenticated() && 
+                      isStudent() &&
+                      isOwner(request.resource.data.studentId) &&
+                      isEmailVerified();
+      
+      // Güncelleme: Yorumu yapan öğrenci veya admin güncelleyebilir
+      allow update: if isOwner(resource.data.studentId) || isAdmin();
+      
+      // Silme: Sadece admin silebilir
+      allow delete: if isAdmin();
+    }
+    
+    // ============================================================================
+    // DEFAULT DENY (Varsayılan Reddetme)
+    // ============================================================================
+    
+    // Yukarıda tanımlanmayan tüm koleksiyonlar için erişim reddedilir
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

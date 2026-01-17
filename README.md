@@ -1,18 +1,59 @@
-# 🎓 Koachy / KoçumYanımda
+# 🎓 Koachy - Online Coaching Platform
 
-Üniversite ve lise sınavlarına hazırlanan öğrencilere birebir online koçluk sunan, uzman koçlarıyla eşle şme sağlayan, gelişimlerini takip edebilecekleri modern web platformu.
+A modern web platform that provides one-on-one online coaching for students preparing for university and high school entrance exams, featuring expert coach matching and progress tracking.
 
-## ✨ Özellikler
+> **[🇹🇷 Türkçe README için tıklayın](README.tr.md)**
 
-- 🎯 **Öğrenci-Koç Eşleştirme**: Branş, tecrübe ve puana göre filtreleme
-- 📅 **Akıllı Randevu Sistemi**: Çakışma önleme algoritması
-- 💬 **Gerçek Zamanlı Mesajlaşma**: Firebase Realtime Database
-- 📚 **Ders Notları ve Raporlar**: PDF/Video paylaşımı ve gelişim takibi
-- 💳 **Güvenli Ödeme**: Stripe ve Iyzico entegrasyonu
-- 🎨 **Dinamik CMS**: Admin panelinden ana sayfa yönetimi
-- 🔐 **Enterprise-level Güvenlik**: XSS, Injection koruması, RBAC
+## ✨ Features
 
-## 🛠️ Teknoloji Stack
+- 🎯 **Student-Coach Matching**: Advanced filtering by subject, experience, and rating
+- 📅 **Smart Appointment System**: Conflict prevention algorithm with real-time availability
+- 💬 **Real-time Messaging**: Firebase Realtime Database integration
+- 📚 **Study Materials & Reports**: PDF/Video sharing and progress tracking
+- 💳 **Secure Payment**: Stripe and Iyzico integration
+- 🎨 **Dynamic CMS**: Homepage management from admin panel
+- 🔐 **Enterprise-level Security**: XSS, Injection protection, RBAC
+
+## 📸 Screenshots
+
+Live functionality showcase of the platform:
+
+````carousel
+![Homepage Hero Section: Modern and attractive design welcoming students. "Let's Reach Success Together" message with stats showing 150+ expert coaches, 500+ students, and 95% success rate.](images/02-hero-section.png)
+
+<!-- slide -->
+
+![Platform Features: Modern cards presenting core features like expert coaches, personal planning, and progress tracking.](images/03-features.png)
+
+<!-- slide -->
+
+![Pricing & Popular Coaches: Starter (1,500₺), Pro (2,500₺), and Elite (4.000₺) packages with popular coach profile cards.](images/04-pricing.png)
+
+<!-- slide -->
+
+![Coaches Listing: Advanced filtering system (expertise area, hourly rate, minimum rating) on coach search page. Detailed information cards for each coach.](images/05-coaches-listing.png)
+
+<!-- slide -->
+
+![Coach Profile Detail: Ayşe Arslan's profile - 8 years experience, 4.9 rating, 203 reviews. Appointment booking system and availability calendar displayed.](images/06-coach-profile.png)
+
+<!-- slide -->
+
+![Login Page: Email/password login and Google sign-in options. Features "Remember Me" and "Forgot Password" functionality.](images/07-login.png)
+
+<!-- slide -->
+
+![Registration Page: Sign up form for Student or Coach roles. Includes full name, email, phone, password fields and terms acceptance.](images/08-register.png)
+
+<!-- slide -->
+
+![Homepage - Full View: Comprehensive homepage view showcasing all platform sections.](images/01-homepage.png)
+````
+
+> [!NOTE]
+> These screenshots were taken from the **live, fully functional** platform. All features are active and operational.
+
+## 🛠️ Technology Stack
 
 - **Frontend**: Next.js 14+ (App Router), React 18+, TypeScript
 - **Styling**: Tailwind CSS, Custom Design System
@@ -21,54 +62,54 @@
 - **Testing**: Playwright (E2E), Vitest (Unit)
 - **Deployment**: Vercel
 
-## 🚀 Kurulum
+## 🚀 Installation
 
-### Gereksinimler
+### Prerequisites
 
 - Node.js >= 18.0.0
 - npm >= 9.0.0
-- Firebase hesabı
-- Stripe hesabı (Test/Production)
+- Firebase account
+- Stripe account (Test/Production)
 
-### Adımlar
+### Steps
 
-1. **Repository'yi klonlayın**
+1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/koachy-web.git
+   git clone https://github.com/MUTLU234/koachy-web.git
    cd koachy-web
    ```
 
-2. **Bağımlılıkları yükleyin**
+2. **Install dependencies**
    ```bash
    npm install
    ```
 
-3. **Environment variables ayarlayın**
+3. **Set up environment variables**
    ```bash
    cp .env.example .env.local
    ```
    
-   `.env.local` dosyasını açarak gerekli API anahtarlarını girin:
+   Open `.env.local` and add your API keys:
    - Firebase credentials
    - Stripe keys
    - NextAuth secret
 
-4. **Development server'ı başlatın**
+4. **Start the development server**
    ```bash
    npm run dev
    ```
    
-   Uygulama [http://localhost:3000](http://localhost:3000) adresinde çalışacaktır.
+   The application will be running at [http://localhost:3000](http://localhost:3000).
 
-## 📁 Proje Yapısı
+## 📁 Project Structure
 
 ```
 koachy-web/
 ├── src/
 │   ├── app/                    # Next.js App Router
-│   │   ├── (auth)/            # Auth sayfaları
-│   │   ├── (dashboard)/       # Dashboard sayfaları
-│   │   └── (public)/          # Public sayfalar
+│   │   ├── (auth)/            # Auth pages
+│   │   ├── (dashboard)/       # Dashboard pages
+│   │   └── (public)/          # Public pages
 │   ├── features/              # Feature modules
 │   │   ├── auth/
 │   │   ├── coaches/
@@ -87,20 +128,19 @@ koachy-web/
 │   └── types/                 # TypeScript types
 ├── firebase/                  # Firebase config
 ├── tests/                     # Test files
-├── test_kanitlari/           # Test evidence
 └── docs/                      # Documentation
 ```
 
-## 🧪 Test
+## 🧪 Testing
 
 ```bash
-# E2E testleri çalıştır
+# Run E2E tests
 npm run test:e2e
 
-# Unit testleri çalıştır
+# Run unit tests
 npm run test:unit
 
-# Tüm testleri çalıştır
+# Run all tests
 npm test
 ```
 
@@ -114,20 +154,20 @@ npm run build
 npm start
 ```
 
-## 🎨 Tasarım Sistemi
+## 🎨 Design System
 
-### Renk Paleti
+### Color Palette
 
-- **Primary**: `#4F46E5` (Mor/Indigo)
-- **Background**: `#F9FAFB` (Açık Gri)
-- **Accent**: `#10B981` (Yeşil)
+- **Primary**: `#4F46E5` (Indigo)
+- **Background**: `#F9FAFB` (Light Gray)
+- **Accent**: `#10B981` (Green)
 
-### Font Ailesi
+### Font Family
 
 - **Sans**: Inter, Poppins
 - **Display**: Poppins, Inter
 
-## 🔐 Güvenlik
+## 🔐 Security
 
 - ✅ Input Validation (Zod)
 - ✅ XSS Protection
@@ -138,7 +178,7 @@ npm start
 - ✅ Firebase Security Rules
 - ✅ Audit Logging
 
-## 📝 Scripts
+## 📝 Available Scripts
 
 ```bash
 npm run dev          # Development server
@@ -151,24 +191,37 @@ npm run test:e2e     # E2E tests
 npm run test:unit    # Unit tests
 ```
 
-## 🤝 Katkıda Bulunma
+## 🤝 Contributing
 
-1. Fork edin
-2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
-3. Commit edin (`git commit -m 'feat: Add amazing feature'`)
-4. Push edin (`git push origin feature/amazing-feature`)
-5. Pull Request açın
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## 📄 Lisans
+## 📄 License
 
-Bu proje MIT lisansı altında lisanslanmıştır.
+This project is licensed under the MIT License.
 
-## 👥 İletişim
+## 👨‍💻 Author
 
-Proje Sahibi - [@your-username](https://github.com/your-username)
+**Nurettin Mutlu Tüver**
 
-Proje Linki: [https://github.com/your-username/koachy-web](https://github.com/your-username/koachy-web)
+- LinkedIn: [linkedin.com/in/nurettin-mutlu-tüver](https://www.linkedin.com/in/nurettin-mutlu-tüver)
+- GitHub: [@MUTLU234](https://github.com/MUTLU234)
+
+## 📞 Contact
+
+For questions or collaboration opportunities, feel free to reach out via LinkedIn or GitHub.
 
 ---
 
-⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!
+⭐ If you found this project helpful, please consider giving it a star!
+
+## 🌟 Key Highlights
+
+- **Full-stack Application**: Built with modern web technologies
+- **Real-time Features**: Live messaging and notifications
+- **Production-ready**: Comprehensive testing and security measures
+- **Scalable Architecture**: Modular design with clean separation of concerns
+- **Professional UI/UX**: Modern design with excellent user experience
